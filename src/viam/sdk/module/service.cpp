@@ -220,13 +220,19 @@ ModuleService_::~ModuleService_() {
 }
 
 void ModuleService_::close() {
-    BOOST_LOG_TRIVIAL(info) << "Shutting down gracefully.";
+    BOOST_LOG_TRIVIAL(info) << "[MODDED] Shutting down gracefully.";
 
+    std::cout << "[CPP-SDK] HERE 1" << std::endl;
     if (parent_) {
+        std::cout << "[CPP-SDK] HERE 2" << std::endl;
         try {
+            std::cout << "[CPP-SDK] HERE 3" << std::endl;
             parent_->close();
+            std::cout << "[CPP-SDK] HERE 4" << std::endl;
         } catch (const std::exception& exc) {
+            std::cout << "[CPP-SDK] HERE 5" << std::endl;
             BOOST_LOG_TRIVIAL(error) << exc.what();
+            std::cout << "[CPP-SDK] HERE 6" << std::endl;
         }
     }
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
+#include <stacktrace>
 #include <string>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -219,7 +220,7 @@ ModuleService_::~ModuleService_() {
     this->close();
 }
 
-void ModuleService_::close() {
+void ModuleService_::close() try {
     BOOST_LOG_TRIVIAL(info) << "[MODDED] Shutting down gracefully.";
     std::cout << std::stacktrace::current() << std::endl;
     std::cout << "[CPP-SDK] HERE 1" << std::endl;
@@ -236,6 +237,10 @@ void ModuleService_::close() {
         }
     }
     std::cout << "[CPP-SDK] HERE 7" << std::endl;
+} catch (const std::exception& exc) {
+    std::cout << "ERROR 1: caught!" << exc.what() << std::endl;
+} catch (...) {
+    std::cout << "ERROR 2: unknown err" << std::endl;
 }
 
 void ModuleService_::add_api_from_registry_inlock_(std::shared_ptr<Server> server,

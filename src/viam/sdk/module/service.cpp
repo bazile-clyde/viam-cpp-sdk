@@ -5,8 +5,8 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-#include <stacktrace>
 #include <string>
+#include <boost/stacktrace.hpp>
 #include <sys/socket.h>
 #include <sys/stat.h>
 
@@ -222,7 +222,7 @@ ModuleService_::~ModuleService_() {
 
 void ModuleService_::close() try {
     BOOST_LOG_TRIVIAL(info) << "[MODDED] Shutting down gracefully.";
-    std::cout << std::stacktrace::current() << std::endl;
+    std::cout << boost::stacktrace::stacktrace();
     std::cout << "[CPP-SDK] HERE 1" << std::endl;
     if (parent_) {
         std::cout << "[CPP-SDK] HERE 2" << std::endl;

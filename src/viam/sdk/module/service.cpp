@@ -162,7 +162,7 @@ std::shared_ptr<Resource> ModuleService_::get_parent_resource(Name name) {
 ::grpc::Status ModuleService_::RemoveResource(
     ::grpc::ServerContext* context,
     const ::viam::module::v1::RemoveResourceRequest* request,
-    ::viam::module::v1::RemoveResourceResponse* response) {
+    ::viam::module::v1::RemoveResourceResponse* response) try {
     auto name = Name::from_string(request->name());
     const std::unordered_map<API, std::shared_ptr<ResourceManager>>& services = module_->services();
     if (services.find(name.api()) == services.end()) {
@@ -183,6 +183,12 @@ std::shared_ptr<Resource> ModuleService_::get_parent_resource(Name name) {
     }
 
     manager->remove(name);
+    return grpc::Status();
+} catch (const std::exception& ex) {
+    std::cout << "[LOGGING] ERROR: A std::exception was thrown from `serve`: " << ex.what() << std::endl;
+    return grpc::Status();
+} catch (...) {
+    std::cout << "[LOGGING] ERROR: An unknown exception was thrown from `serve`" << std::endl;
     return grpc::Status();
 };
 

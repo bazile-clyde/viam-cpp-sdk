@@ -221,7 +221,7 @@ ModuleService_::~ModuleService_() {
 
 void ModuleService_::close() {
     BOOST_LOG_TRIVIAL(info) << "[MODDED] Shutting down gracefully.";
-
+    std::cout << std::stacktrace::current() << std::endl;
     std::cout << "[CPP-SDK] HERE 1" << std::endl;
     if (parent_) {
         std::cout << "[CPP-SDK] HERE 2" << std::endl;
@@ -235,6 +235,7 @@ void ModuleService_::close() {
             std::cout << "[CPP-SDK] HERE 6" << std::endl;
         }
     }
+    std::cout << "[CPP-SDK] HERE 7" << std::endl;
 }
 
 void ModuleService_::add_api_from_registry_inlock_(std::shared_ptr<Server> server,
